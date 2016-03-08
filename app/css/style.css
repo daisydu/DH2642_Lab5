@@ -77,10 +77,11 @@
     }/*dishDetail repeat, overviewPage repeat*/
 
     .dish{
+        height: 200px;
     	margin-top: 35px;
         margin-bottom: 3px;
-        padding: 0px;
-        border: 1px solid black;
+        padding: 5px;
+        /*border: 1px solid black;*/
     }/*, overviewPage repeat, printPage*/
     .dish img{
     	width: 100%;
@@ -88,10 +89,11 @@
     }/*, printPage*/
     .dishname{
         margin-top: auto;
-        height: 40px;
+        /*height: 40px;*/
   		text-align: center;  
-  		background-color: #D8D8D8;
+  		/*background-color: #D8D8D8;*/
         padding-top: 3px;
+        font-size: 15px
 
     }/*, overviewPage repeat*/
 
@@ -101,11 +103,14 @@
     /*, overviewPage repeat*/
 
     .description{
-    	height: 72px;
-    	padding: 5px;
-    	text-align: justify;
+    	height: 10px;
+    	padding: 0px;
+    	text-align: center;
     	font-size: 12px;
-    	overflow: hidden;
+    }
+
+    .caption{
+        padding: initial;
     }
 
 
@@ -280,7 +285,9 @@
     }
     #ListDishesView{
         padding-left: 40px;
-        padding-right: 0px;
+        padding-right: 40px;
+        padding-bottom: 40px;
+        margin-bottom: 40px;
     }
     .pending{
         background-color: #F97A7A;
