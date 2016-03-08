@@ -6,13 +6,14 @@
 dinnerPlannerApp.factory('Dinner',function ($resource) {
   
   var numberOfGuest = 2;
-  var menu = [];
   var pendingmenu = [];
   var dishType = '';
   var filter = '';
   var dishID;
+  var th = this;
   this.dish = [];
   this.dishes = [];  
+  this.menu = [];
 
   this.setNumberOfGuests = function(num) {
     numberOfGuest = num;
@@ -22,36 +23,56 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
     return numberOfGuest;
   }
 
-  this.setDishID = function(id){
-        dishID = id;
-  }
-
-  this.getDishID = function(){
-    //console.log("get id"+dishID);
-    return dishID;
-  }
-
-  this.setFilter = function(flt){
-        filter = flt;
-        //console.log("i am " + filter);
-  }
-
-  this.getFilter = function(){
-        return filter;
+  this.getTotalDishPrice = function(Ingredients){
+    var guestNum = this.getNumberOfGuests();
+    var dishIngre = Ingredients;
+    var totalPrice = 0;
+    for (var i = 0; i < dishIngre.length; i++) {
+      totalPrice += dishIngre[i].Quantity * guestNum;
+    };
+    totalPrice = parseFloat(totalPrice.toFixed(2));
+    return totalPrice;
   }
 
   this.getFullMenu = function() {
-    //TODO Lab 2
-    var dishesOnMenu = [];
-    for (var i = 0; i < menu.length; i++) {
-      dishesOnMenu.push(this.getLocalDish(menu[i]));
-
+    for (var i = 0; i < this.menu.length; i++) {
+        dishPrice = this.getTotalDishPrice(this.menu[i].Ingredients);
+        this.menu[i].DishPrice = dishPrice;
     };
-    // console.log(dishesOnMenu);
-        return dishesOnMenu;
+        return this.menu;
+  }
+  
+  this.addDishToMenu = function(dishID) {
+     this.Dish.get({id:dishID},function(data){
+       var selectDishType = data.Category;
+       var theSameType = -1;
+
+        if (th.menu.length == 0) {
+          th.menu.push(data);
+          //console.log("directly add");
+        } else{
+          for (var i = 0; i< th.menu.length; i++) {
+          //if there is the same type in the menu, assign the value of the theSameType with the array index
+            var dishInMenu = th.menu[i];
+            var dishInMenuType = dishInMenu.Category;
+            if (dishInMenuType == selectDishType) {
+              theSameType = i;   
+              //console.log("same");    
+            };
+          };
+
+          if (theSameType != -1) {
+            th.menu[theSameType] = data;
+            //console.log("switch");
+          }else{
+            th.menu.push(data); 
+            //console.log("addNew");
+          };
+        }; 
+        th.getFullMenu();  
+     }); 
   }
 
-  var th = this;
   // var apiKey = "18f3cT02U9f6yRl3OKDpP8NA537kxYKu";
   // var apiKey = "XKEdN82lQn8x6Y5jm3K1ZX8L895WUoXN";
   // var apiKey = "3stL5NVP4s6ZkmK5gt4dci8a4zOQRpD4";
@@ -62,14 +83,13 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
 
   this.DishSearch = $resource('http://api.bigoven.com/recipes',{pg:1,rpp:5,api_key: apiKey});
   this.Dish = $resource('http://api.bigoven.com/recipe/:id',{api_key: apiKey}); 
-  dishes = this.DishSearch.get({});
-  //console.log(dishes.Results);
+
   // dish = this.Dish.get({id:12345});
   //console.log(dish);
-  this.Dish.get({id:12345},function(data){
-    th.dish=data;
-    //console.log(th.dish.Title);
-    });
+  // this.Dish.get({id:12345},function(data){
+  //   th.dish=data;
+  //   //console.log(th.dish.Title);
+  //   });
 
     this.DishSearch.get({title_kw:"main"},function(data){
     th.dishes = data.Results;
@@ -81,9 +101,6 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
   // you will need to modify the model (getDish and getAllDishes) 
   // a bit to take the advantage of Angular resource service
   // check lab 5 instructions for details
-
-
-
 
 
   // Angular service needs to return an object that has all the

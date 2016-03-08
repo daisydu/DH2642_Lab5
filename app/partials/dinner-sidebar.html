@@ -20,20 +20,24 @@ this with Total price of the menu -->
                     <div class="panel panel-default">
                     	<div class="panel-body">
                     		<table id="dinnerMenu" class="table">
-
 		                    	<thead>
 		                   			<tr>
 		                   				<th>Dish Name</th>
 		                   				<th>Cost</th>
 		                   				<th></th>
 		                   			</tr>
+		                   		</thead>
+		                   		<tbody id = "tableBody">
 		                   			<tr>
 		                   				<th>Pending</th>
 		                   				<th>0</th>
 		                   				<th></th>
 		                   			</tr>
-		                   		</thead>
-		                   		<tbody id = "tableBody">
+		                   			<tr ng-repeat="dish in menu" >
+		                   				<td>{{dish.Title}}</th>
+		                   				<td>{{dish.DishPrice}}</th>
+		                   				<td><span class = "glyphicon glyphicon-remove removeDish"></span></td>
+		                   			</tr>
 		                		</tbody>
                    			</table>
                    			<div class="MenuTotalPrice price">Total Price:  <span id="totalPrice"></span> SEK </div>

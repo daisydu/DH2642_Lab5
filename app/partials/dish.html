@@ -28,26 +28,30 @@ Instructions, Ingredients and total cost. -->
 						<table class="ingtable">
 							<tr style="border-bottom: 1px solid gray; padding-bottom: 20px;">
 							<th colspan="4" style="padding-bottom: 10px;">
-							Ingredients for <span class = "numberOfPeople" id="numberOfGuests">{{people}} </span>people</th>
+							Ingredients for <span class = "numberOfPeople" id="numberOfGuests">{{numberOfGuests}} </span>people</th>
 							</tr>
 							<tbody id = "dishIngre">
 								<tr ng-repeat="Ingredient in Ingredients">
-									<td> {{Ingredient.Quantity*people}}</td>
+									<td> {{Ingredient.Quantity*numberOfGuests}}</td>
 									<td> {{Ingredient.MetricUnit}} </td>
 						 		    <td style= "width: 55%;"> {{Ingredient.Name}} </td>
 									<td> SEK </td> 
 									<td>  </td> 
-									<td> {{Ingredient.Quantity*people}} </td>
+									<td> {{Ingredient.Quantity*numberOfGuests}} </td>
 							    </tr></br>
 							</tbody>
-							<tbody id = "dishPrice"></tbody>
+							<tbody id = "dishPrice">
+								<tr>
+								    <td style= "width: 55%;" >Total</td>
+								    <td> </td>
+								    <td> </td> 
+									<td> SEK </td> 
+									<td> {{dishPrice}} </td>
+								 </tr></br>
+							</tbody>
 						</table>
                         <div><button type="button" style="width:115px;margin-left: 100px; margin-top:5px" class="confirm btn btn-warning" ng-click="addMenu(dish.RecipeID)">Confirm Dish</div>
-                        <!-- 第一步 设置一个id,当点击菜以后，将选择的菜的id赋值给这个event，用jquery赋值
-                             点击以后 这个值传送到后台，然后trigue 加入menu这个函数
-                        -->
 					</div>	
-
 
 					<!--add introduction for each dish-->
 					<div class="col-xs-11 pre">
