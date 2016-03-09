@@ -30,6 +30,7 @@ dinnerPlannerApp.controller('DishCtrl', function ($scope,$routeParams,Dinner) {
 
     $scope.addMenu = function(dishID){
      Dinner.addDishToMenu(dishID);
+     Dinner.getFullMenu();
      $scope.clearPending();
     }
 
