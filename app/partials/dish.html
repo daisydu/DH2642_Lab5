@@ -19,8 +19,8 @@ Instructions, Ingredients and total cost. -->
 						<div class="dishdescription" id="dishInfo">{{dish.Description}}</div>
 
 						<div><a href="#/search">
-							<button type="button" id="backToMenu" class="btn btn-warning backToMenu">
-								<span class="glyphicon glyphicon-chevron-left"></span>Back to Select Dish</button></a>
+							<button type="button" id="backToMenu" class="btn btn-warning backToMenu" ng-click="clearPending()">
+								<span class="glyphicon glyphicon-chevron-left" ></span>Back to Select Dish</button></a>
 						</div>
 				 	</div>
 
@@ -50,8 +50,8 @@ Instructions, Ingredients and total cost. -->
 								 </tr></br>
 							</tbody>
 						</table>
-                        <div><button type="button" style="width:115px;margin-left: 100px; margin-top:5px" class="confirm btn btn-warning" ng-click="addMenu(dish.RecipeID)" >Confirm Dish</div>
 					</div>	
+					<div><button type="button" style="width:115px;margin-left: 100px; margin-top:5px" class="confirm btn btn-warning" ng-click="addMenu(dish.RecipeID)" >Confirm Dish</div>
 
 					<!--add introduction for each dish-->
 					<div class="col-xs-11 pre">

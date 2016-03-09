@@ -3,7 +3,7 @@
 // dependency on any service you need. Angular will insure that the
 // service is created first time it is needed and then just reuse it
 // the next time.
-dinnerPlannerApp.factory('Dinner',function ($resource) {
+dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
   
   var numberOfGuest = 2;
   var pendingmenu = [];
@@ -11,36 +11,43 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
   var filter = '';
   var dishID;
   var th = this;
+  var num = 1;
   this.pending = [];
   this.dish = [];
   this.dishes = [];  
   this.menu = [];
+  this.pending.Title = "pending";
 
-   var apiKey = "18f3cT02U9f6yRl3OKDpP8NA537kxYKu";
+  // var apiKey = "18f3cT02U9f6yRl3OKDpP8NA537kxYKu";
   // var apiKey = "XKEdN82lQn8x6Y5jm3K1ZX8L895WUoXN";
   // var apiKey = "3stL5NVP4s6ZkmK5gt4dci8a4zOQRpD4";
-  // var apiKey = "8vtk7KykflO5IzB96kb0mpot0sU40096";
+   var apiKey = "8vtk7KykflO5IzB96kb0mpot0sU40096";
   // var apiKey = "1hg3g4Dkwr6pSt22n00EfS01rz568IR6";
   // var apiKey = "r02x0R09O76JMCMc4nuM0PJXawUHpBUL";
   // var apiKey = "H9n1zb6es492fj87OxDtZM9s5sb29rW3";
 
   this.setNumberOfGuests = function(num) {
     numberOfGuest = num;
+    $cookieStore.put("numberOfGuest",num);
   }
 
   this.getNumberOfGuests = function() {
-    return numberOfGuest;
+    return $cookieStore.get("numberOfGuest"); 
   }
 
   this.getTotalDishPrice = function(Ingredients){
     var guestNum = this.getNumberOfGuests();
     var dishIngre = Ingredients;
+    //console.log(guestNum);
+
     var totalPrice = 0;
     for (var i = 0; i < dishIngre.length; i++) {
       totalPrice += dishIngre[i].Quantity * guestNum;
     };
     totalPrice = parseFloat(totalPrice.toFixed(2));
+    //console.log(totalPrice);
     return totalPrice;
+    
   }
   
   this.addPending = function(Title, Ingredients){
@@ -55,7 +62,10 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
   }
 
   this.getPendingName = function(){
-    var Title = this.pending.Title;
+      var Title = this.pending.Title;
+    //   if (Title != "pending") {
+    //   var Title = this.pending.Title;
+    // };
     return Title;
   }
 
