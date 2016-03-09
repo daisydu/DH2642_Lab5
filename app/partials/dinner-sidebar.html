@@ -12,7 +12,7 @@ this with Total price of the menu -->
 				<h3>My Dinner</h3>
 			    <div class = "panel panel-default">
 			   	    <div class="panel-body">
-		                <div>People: <input type="number" ng-model="numberOfGuests" ng-change="setNumberOfGuest(numberOfGuests)" style="width:10"/> </div> 
+		                <div>People: <input type="number" min="1" ng-model="numberOfGuests" ng-change="setNumberOfGuest(numberOfGuests)" style="width:10"/> </div> 
 			   	    </div>
 			    </div>
 				
@@ -28,19 +28,19 @@ this with Total price of the menu -->
 		                   			</tr>
 		                   		</thead>
 		                   		<tbody id = "tableBody">
-		                   			<tr>
-		                   				<th>Pending</th>
-		                   				<th>0</th>
-		                   				<th></th>
-		                   			</tr>
 		                   			<tr ng-repeat="dish in menu" >
 		                   				<td>{{dish.Title}}</th>
 		                   				<td>{{dish.DishPrice}}</th>
-		                   				<td><span class = "glyphicon glyphicon-remove removeDish"></span></td>
+		                   				<td><span class = "glyphicon glyphicon-remove removeDish" ng-click="removeDishFromMenu(dish.RecipeID)"></span></td>
+		                   			</tr>
+		                   			<tr class="pending"> 
+		                   				<th>{{getPendingName()}}</th>
+		                   				<th>{{getPendingPrice()}}</th>
+		                   				<th></th>
 		                   			</tr>
 		                		</tbody>
                    			</table>
-                   			<div class="MenuTotalPrice price">Total Price:  <span id="totalPrice"></span> SEK </div>
+                   			<div class="MenuTotalPrice price">Total Price: {{getTotalMenuPrice()}} <span id="totalPrice"></span> SEK </div>
                     	</div>
                     </div>	
                   </div>
