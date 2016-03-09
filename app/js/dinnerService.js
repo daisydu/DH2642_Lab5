@@ -6,7 +6,14 @@
 dinnerPlannerApp.factory('Dinner',function ($resource) {
   
   var numberOfGuest = 2;
-
+  var pendingmenu = [];
+  var dishType = '';
+  var filter = '';
+  var dishID;
+  var th = this;
+  this.dish = [];
+  this.dishes = [];  
+  this.menu = [];
 
   this.setNumberOfGuests = function(num) {
     numberOfGuest = num;
@@ -16,15 +23,84 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
     return numberOfGuest;
   }
 
+  this.getTotalDishPrice = function(Ingredients){
+    var guestNum = this.getNumberOfGuests();
+    var dishIngre = Ingredients;
+    var totalPrice = 0;
+    for (var i = 0; i < dishIngre.length; i++) {
+      totalPrice += dishIngre[i].Quantity * guestNum;
+    };
+    totalPrice = parseFloat(totalPrice.toFixed(2));
+    return totalPrice;
+  }
 
+  this.getFullMenu = function() {
+    for (var i = 0; i < this.menu.length; i++) {
+        dishPrice = this.getTotalDishPrice(this.menu[i].Ingredients);
+        this.menu[i].DishPrice = dishPrice;
+    };
+        return this.menu;
+  }
+  
+  this.addDishToMenu = function(dishID) {
+     this.Dish.get({id:dishID},function(data){
+       var selectDishType = data.Category;
+       var theSameType = -1;
+
+        if (th.menu.length == 0) {
+          th.menu.push(data);
+          //console.log("directly add");
+        } else{
+          for (var i = 0; i< th.menu.length; i++) {
+          //if there is the same type in the menu, assign the value of the theSameType with the array index
+            var dishInMenu = th.menu[i];
+            var dishInMenuType = dishInMenu.Category;
+            if (dishInMenuType == selectDishType) {
+              theSameType = i;   
+              //console.log("same");    
+            };
+          };
+
+          if (theSameType != -1) {
+            th.menu[theSameType] = data;
+            //console.log("switch");
+          }else{
+            th.menu.push(data); 
+            //console.log("addNew");
+          };
+        }; 
+        th.getFullMenu();  
+     }); 
+  }
+
+  // var apiKey = "18f3cT02U9f6yRl3OKDpP8NA537kxYKu";
+  // var apiKey = "XKEdN82lQn8x6Y5jm3K1ZX8L895WUoXN";
+  // var apiKey = "3stL5NVP4s6ZkmK5gt4dci8a4zOQRpD4";
+  // var apiKey = "8vtk7KykflO5IzB96kb0mpot0sU40096";
+  // var apiKey = "1hg3g4Dkwr6pSt22n00EfS01rz568IR6";
+   var apiKey = "r02x0R09O76JMCMc4nuM0PJXawUHpBUL";
+  // var apiKey = "H9n1zb6es492fj87OxDtZM9s5sb29rW3";
+
+  this.DishSearch = $resource('http://api.bigoven.com/recipes',{pg:1,rpp:5,api_key: apiKey});
+  this.Dish = $resource('http://api.bigoven.com/recipe/:id',{api_key: apiKey}); 
+
+  // dish = this.Dish.get({id:12345});
+  //console.log(dish);
+  // this.Dish.get({id:12345},function(data){
+  //   th.dish=data;
+  //   //console.log(th.dish.Title);
+  //   });
+
+    this.DishSearch.get({title_kw:"main"},function(data){
+    th.dishes = data.Results;
+    //console.log(th.dishes);
+  });
+  
   // TODO in Lab 5: Add your model code from previous labs
   // feel free to remove above example code
   // you will need to modify the model (getDish and getAllDishes) 
   // a bit to take the advantage of Angular resource service
   // check lab 5 instructions for details
-
-
-
 
 
   // Angular service needs to return an object that has all the

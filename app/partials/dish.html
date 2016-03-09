@@ -1,5 +1,65 @@
+<div class="container">
+
+	<div class="row title">
+				<h1>HOMELETTE</h1>
+				<p id="demo">From the best chefs in the world directly into your kitchen</p>
+	</div>
 <!-- We include the sidebar as it is shared across two screens. -->
 <ng-include src="'partials/dinner-sidebar.html'" ng-controller="DinnerCtrl"></ng-include>
 
 <!-- TODO in Lab 5: Display the dish information including image, Description, 
 Instructions, Ingredients and total cost. -->
+	<div class="col-xs-9 dishcontainer2" id="dishView">
+		<!--dish detail-->
+				<div class="row" id = "SelectDishView">
+					<div class="col-xs-5 dish2">
+						<div class="dishtitle" id="dishName">{{dish.Title}}</div>					
+						<div class="dishimg" id ="dishImg"><img ng-src="{{dish.ImageURL}}"/></div>
+
+						<div class="dishdescription" id="dishInfo">{{dish.Description}}</div>
+
+						<div><a href="#/search">
+							<button type="button" id="backToMenu" class="btn btn-warning backToMenu">
+								<span class="glyphicon glyphicon-chevron-left"></span>Back to Select Dish</button></a>
+						</div>
+				 	</div>
+
+				 	<div class="col-xs-5 ingredients">
+						<table class="ingtable">
+							<tr style="border-bottom: 1px solid gray; padding-bottom: 20px;">
+							<th colspan="4" style="padding-bottom: 10px;">
+							Ingredients for <span class = "numberOfPeople" id="numberOfGuests">{{numberOfGuests}} </span>people</th>
+							</tr>
+							<tbody id = "dishIngre">
+								<tr ng-repeat="Ingredient in Ingredients">
+									<td> {{Ingredient.Quantity*numberOfGuests}}</td>
+									<td> {{Ingredient.MetricUnit}} </td>
+						 		    <td style= "width: 55%;"> {{Ingredient.Name}} </td>
+									<td> SEK </td> 
+									<td>  </td> 
+									<td> {{Ingredient.Quantity*numberOfGuests}} </td>
+							    </tr></br>
+							</tbody>
+							<tbody id = "dishPrice">
+								<tr>
+								    <td style= "width: 55%;" >Total</td>
+								    <td> </td>
+								    <td> </td> 
+									<td> SEK </td> 
+									<td> {{dishPrice}} </td>
+								 </tr></br>
+							</tbody>
+						</table>
+                        <div><button type="button" style="width:115px;margin-left: 100px; margin-top:5px" class="confirm btn btn-warning" ng-click="addMenu(dish.RecipeID)">Confirm Dish</div>
+					</div>	
+
+					<!--add introduction for each dish-->
+					<div class="col-xs-11 pre">
+						<div class="preparation">Preparation</div>
+						<div class="dishIntroduction" id="dishIntro">{{dish.Instructions}}</div>
+
+					</div>
+				</div>						
+	</div>		
+
+</div>
