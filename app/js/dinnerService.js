@@ -11,9 +11,18 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
   var filter = '';
   var dishID;
   var th = this;
+  this.pending = [];
   this.dish = [];
   this.dishes = [];  
   this.menu = [];
+
+   var apiKey = "18f3cT02U9f6yRl3OKDpP8NA537kxYKu";
+  // var apiKey = "XKEdN82lQn8x6Y5jm3K1ZX8L895WUoXN";
+  // var apiKey = "3stL5NVP4s6ZkmK5gt4dci8a4zOQRpD4";
+  // var apiKey = "8vtk7KykflO5IzB96kb0mpot0sU40096";
+  // var apiKey = "1hg3g4Dkwr6pSt22n00EfS01rz568IR6";
+  // var apiKey = "r02x0R09O76JMCMc4nuM0PJXawUHpBUL";
+  // var apiKey = "H9n1zb6es492fj87OxDtZM9s5sb29rW3";
 
   this.setNumberOfGuests = function(num) {
     numberOfGuest = num;
@@ -32,6 +41,34 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
     };
     totalPrice = parseFloat(totalPrice.toFixed(2));
     return totalPrice;
+  }
+  
+  this.addPending = function(Title, Ingredients){
+    this.pending.Title = Title;
+    this.pending.Ingredients = Ingredients;
+
+  }
+
+  this.clearPending = function(){
+    this.pending.Title = "pending";
+    this.pending.dishPrice = 0;
+  }
+
+  this.getPendingName = function(){
+    var Title = this.pending.Title;
+    return Title;
+  }
+
+  this.getPendingPrice = function(){
+    var dishPrice;
+    if (this.pending.Title == "pending") {
+        dishPrice = 0;
+    }else{
+      var Ingredients = this.pending.Ingredients;
+      dishPrice = this.getTotalDishPrice(Ingredients);
+    }
+    //console.log(dishPrice);
+    return dishPrice;
   }
 
   this.getFullMenu = function() {
@@ -73,13 +110,28 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
      }); 
   }
 
-  // var apiKey = "18f3cT02U9f6yRl3OKDpP8NA537kxYKu";
-  // var apiKey = "XKEdN82lQn8x6Y5jm3K1ZX8L895WUoXN";
-  // var apiKey = "3stL5NVP4s6ZkmK5gt4dci8a4zOQRpD4";
-  // var apiKey = "8vtk7KykflO5IzB96kb0mpot0sU40096";
-  // var apiKey = "1hg3g4Dkwr6pSt22n00EfS01rz568IR6";
-   var apiKey = "r02x0R09O76JMCMc4nuM0PJXawUHpBUL";
-  // var apiKey = "H9n1zb6es492fj87OxDtZM9s5sb29rW3";
+  this.removeDishFromMenu = function(id) {
+    for (var i = 0; i< this.menu.length; i++) {
+      if (this.menu[i].RecipeID == id) {
+        // console.log(menu[i]);
+        this.menu.splice(i,1);
+      };
+    };
+    //console.log(this.menu);
+  }
+
+  this.getTotalMenuPrice = function() {
+       this.getFullMenu();
+       var totalPrice = 0;
+       //console.log(this.menu);
+        //The loop to get all the price and pass the value of the price
+       for (var i = 0; i < this.menu.length; i++) {
+          totalPrice += this.menu[i].DishPrice;
+        };       
+       totalPrice = parseFloat(totalPrice.toFixed(2));
+       //console.log(totalPrice);
+      return totalPrice;
+  }
 
   this.DishSearch = $resource('http://api.bigoven.com/recipes',{pg:1,rpp:5,api_key: apiKey});
   this.Dish = $resource('http://api.bigoven.com/recipe/:id',{api_key: apiKey}); 
