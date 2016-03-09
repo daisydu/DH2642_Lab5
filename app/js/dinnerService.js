@@ -5,7 +5,7 @@
 // the next time.
 dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
   
-  var numberOfGuest = 2;
+  var numberOfGuest = 1;
   var pendingmenu = [];
   var dishType = '';
   var filter = '';
@@ -32,7 +32,11 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
   }
 
   this.getNumberOfGuests = function() {
-    return $cookieStore.get("numberOfGuest"); 
+    if ($cookieStore.get("numberOfGuest")) {
+      return $cookieStore.get("numberOfGuest");
+    }else{
+      return numberOfGuest;
+    }    
   }
 
   this.getTotalDishPrice = function(Ingredients){
@@ -63,9 +67,6 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
 
   this.getPendingName = function(){
       var Title = this.pending.Title;
-    //   if (Title != "pending") {
-    //   var Title = this.pending.Title;
-    // };
     return Title;
   }
 
@@ -83,19 +84,42 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
 
   this.getCookieMenu = function() {
     if ( $cookieStore.get("menuID") ){
-      // this.menuID = $cookieStore.get("menuID");
-      console.log(this.menuID);
-      for (var key in this.menuID){
-      (function(key){
-        // this.menu[key]
-        //console.log("hi");
-      })(key)
-    }
+      if (this.menuID == "") {
+        this.menuID = $cookieStore.get("menuID");
+        for(var key in this.menuID){
+            var dishID = this.menuID[key];
+            var getDish = this.Dish;
+            (function(key){
+            getDish.get({id:dishID},function(data){
+            th.menu.push(data);
+            });
+          })(key)
+        }
+      }else {
+         var preID = $cookieStore.get("menuID");
+          for (var key in preID){
+            var dishID = preID[key];
+            var getDish = this.Dish;
+            var findSameID = false;
+            // if the dish has already in the menu, leave it; if it is the new one, add to the menu.
+            for(var key in this.menuID){
+               if(this.menuID[key] == dishID){
+                  findSameID = true;
+               }
+            }
+          
+          if (findSameID == false) {
+            (function(key){
+              getDish.get({id:dishID},function(data){
+              th.menu.push(data);
+              });
+          })(key)
+          };  
+        }
+      }
     };
-    else{
-      return;
-    }
   }
+
 
   this.getFullMenu = function() {
      for (var i = 0; i < this.menu.length; i++) {
@@ -106,7 +130,8 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
   }
   
   this.addDishToMenu = function(dishID) {
-    this.getCookieMenu();
+    //this.getCookieMenu();
+    
      this.Dish.get({id:dishID},function(data){
        var selectDishType = data.Category;
        var theSameType = -1;
@@ -114,7 +139,6 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
         if (th.menu.length == 0) {
           th.menu.push(data);
           th.menuID.push(dishID);
-          //console.log("directly add");
         } else{
           for (var i = 0; i< th.menu.length; i++) {
           //if there is the same type in the menu, assign the value of the theSameType with the array index
@@ -137,28 +161,23 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
           };
         }; 
 
-        //th.menuID.push(dishID);
         $cookieStore.put("menuID",th.menuID);
-        // console.log(th.menuID);
-        // console.log($cookieStore.get("menuID"));  
+ 
      }); 
-     // this.getFullMenu();
+
   }
 
   this.removeDishFromMenu = function(id) {
     for (var i = 0; i< this.menu.length; i++) {
       if (this.menu[i].RecipeID == id) {
-        // console.log(menu[i]);
         this.menu.splice(i,1);
       };
     };
-    //console.log(this.menu);
   }
 
   this.getTotalMenuPrice = function() {
       this.getFullMenu();
        var totalPrice = 0;
-       //console.log(this.menu);
         //The loop to get all the price and pass the value of the price
        for (var i = 0; i < this.menu.length; i++) {
           totalPrice += this.menu[i].DishPrice;
@@ -177,12 +196,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
   //   th.dish=data;
   //   //console.log(th.dish.Title);
   //   });
-
-    this.DishSearch.get({title_kw:"main"},function(data){
-    th.dishes = data.Results;
-    //console.log(th.dishes);
-  });
-  
+ 
   // TODO in Lab 5: Add your model code from previous labs
   // feel free to remove above example code
   // you will need to modify the model (getDish and getAllDishes) 

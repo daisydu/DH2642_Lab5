@@ -38,7 +38,8 @@ dinnerPlannerApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/home', {
-        templateUrl: 'partials/home.html'
+        templateUrl: 'partials/home.html',
+        controller: 'DinnerCtrl'
       }).
       when('/search', {
         templateUrl: 'partials/search.html',
