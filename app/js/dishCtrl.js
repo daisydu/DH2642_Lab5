@@ -12,8 +12,6 @@ dinnerPlannerApp.controller('DishCtrl', function ($scope,$routeParams,Dinner) {
    Dinner.Dish.get({id:$routeParams.dishId},function(data){
     
      var dishTitle = data.Title;  
-     //var Ingredients = $scope.dish.Ingredients;
-     //var dishPrice = Dinner.getTotalDishPrice($scope.Ingredients);
      
      $scope.dish=data;
      $scope.Ingredients = $scope.dish.Ingredients;
