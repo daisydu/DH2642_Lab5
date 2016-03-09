@@ -49,7 +49,6 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
       totalPrice += dishIngre[i].Quantity * guestNum;
     };
     totalPrice = parseFloat(totalPrice.toFixed(2));
-    //console.log(totalPrice);
     return totalPrice;
     
   }
