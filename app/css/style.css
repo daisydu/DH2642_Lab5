@@ -67,8 +67,8 @@
     	margin-bottom: 10px;
         margin-left: 0px;
     	padding: 0px 0px 0px 0px;
-      /*  border: 0.5px solid gray;  */
-    }/*, overviewPage repeat*/
+
+    }
     .dishbox{
     	margin: 5px 5px 10px 10px;
     	padding: 0px 0px 10px 0px;
@@ -82,11 +82,14 @@
         margin-bottom: 3px;
         padding: 5px;
         /*border: 1px solid black;*/
-    }/*, overviewPage repeat, printPage*/
+    }
     .dish img{
     	width: 100%;
     	height: 100px;
-    }/*, printPage*/
+    }
+
+
+    /*, printPage*/
     .dishname{
         margin-top: auto;
         /*height: 40px;*/
@@ -95,12 +98,12 @@
         padding-top: 3px;
         font-size: 15px
 
-    }/*, overviewPage repeat*/
+    }
 
     .dishname span{
         color: rgba(0,0,0);
     }
-    /*, overviewPage repeat*/
+
 
     .description{
     	height: 10px;
@@ -151,7 +154,7 @@
 
     .dishimg img{
         width: 100%;
-        height: 100%;
+        height: 50%;
     }
     .dishtitle{
         width: 100%;
@@ -234,10 +237,11 @@
     }
     .total p{
         position: absolute;
+        top: 200px;
         bottom: 0px;
         padding:0px;
         margin: auto;
-        font-size: 20px;
+        font-size: 16px;
     }
 
     .price{

@@ -1,0 +1,49 @@
+<div class="container">
+		<div class="row title">
+			<h1>HOMELETTE</h1>
+			<p id="demo">From the best chefs in the world directly into your kitchen</p>
+		</div>
+
+
+<!-- We include the sidebar as it is shared across two screens. -->
+<!-- <ng-include src="'partials/overview.html'" ng-controller="DinnerCtrl"></ng-include> -->
+
+<!-- TODO in Lab 5: Display the input box for search (you can ignore the type dropdown since BigOven does
+not support it in free version) and list all the dishes that match the search. -->
+		<div class="row title" id="filter2">
+			<div div class="col-xs-9">
+				<h2>My Dinner: <span class="numberOfPeople"></span> people</h2>
+			</div>
+			<div div class="col-xs-3" style="padding-top:25px;">
+				<button type="button" id="backToMenu1" class="btn btn-warning"><span class="glyphicon glyphicon-chevron-left"></span>Go Back and Edit Dinner</button>
+			</div>
+		</div>
+
+<!--Print page-->
+	    <div id="print">
+	    	<div id = "PreparationView">   
+
+			<div  class="row box" ng-repeat = "dish in menu">
+
+					<div class="row" >	               
+			               <div class= "col-xs-3 printImg">
+							  <div class= "dish">
+							  <div><img class="img" ng-src="{{dish.ImageURL}}"/></div>
+							  </div>
+					       </div>
+					      <div class= "col-xs-2 dishinfo" >
+							  <div class="dishpretitle"> {{dish.Title}} </div>
+							  <div class="dishtext"> {{dish.Category}}</div>
+					      </div>
+					      <div class= "col-xs-7 dishpre">
+							  <div class="dishpretitle"> Preparation </div>
+							  <div class="dishtext"> {{dish.Instructions}}</div>
+					      </div>
+					</div>
+
+			</div>
+			</div>
+	    </div>	
+
+
+</div> 
