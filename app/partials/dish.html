@@ -28,16 +28,16 @@ Instructions, Ingredients and total cost. -->
 						<table class="ingtable">
 							<tr style="border-bottom: 1px solid gray; padding-bottom: 20px;">
 							<th colspan="4" style="padding-bottom: 10px;">
-							Ingredients for <span class = "numberOfPeople" id="numberOfGuests">{{numberOfGuests}} </span>people</th>
+							Ingredients for <span class = "numberOfPeople" id="numberOfGuests">{{getNumberOfGuests()}} </span>people</th>
 							</tr>
 							<tbody id = "dishIngre">
 								<tr ng-repeat="Ingredient in Ingredients">
-									<td> {{Ingredient.Quantity*numberOfGuests}}</td>
+									<td> {{(Ingredient.Quantity*numberOfGuests).toPrecision(2)}}</td>
 									<td> {{Ingredient.MetricUnit}} </td>
 						 		    <td style= "width: 55%;"> {{Ingredient.Name}} </td>
 									<td> SEK </td> 
 									<td>  </td> 
-									<td> {{Ingredient.Quantity*numberOfGuests}} </td>
+									<td> {{(Ingredient.Quantity*numberOfGuests).toPrecision(2)}} </td>
 							    </tr></br>
 							</tbody>
 							<tbody id = "dishPrice">
