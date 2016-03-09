@@ -22,7 +22,7 @@ dinnerPlannerApp.controller('DishCtrl', function ($scope,$routeParams,Dinner) {
      $scope.Ingredients = $scope.dish.Ingredients;
      $scope.dishPrice = Dinner.getTotalDishPrice($scope.Ingredients);
 
-     Dinner.addPending(dishTitle,$scope.dishPrice);
+     Dinner.addPending(dishTitle,$scope.Ingredients);
 
    },function(data){
      $scope.status = "There was an error";

@@ -43,9 +43,9 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
     return totalPrice;
   }
   
-  this.addPending = function(Title, dishPrice){
+  this.addPending = function(Title, Ingredients){
     this.pending.Title = Title;
-    this.pending.dishPrice = dishPrice;
+    this.pending.Ingredients = Ingredients;
 
   }
 
@@ -60,7 +60,13 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
   }
 
   this.getPendingPrice = function(){
-    var dishPrice = this.pending.dishPrice;
+    var dishPrice;
+    if (this.pending.Title == "pending") {
+        dishPrice = 0;
+    }else{
+      var Ingredients = this.pending.Ingredients;
+      dishPrice = this.getTotalDishPrice(Ingredients);
+    }
     //console.log(dishPrice);
     return dishPrice;
   }
