@@ -21,7 +21,7 @@ dinnerPlannerApp.controller('DishCtrl', function ($scope,$routeParams,Dinner) {
      $scope.dish=data;
      $scope.Ingredients = $scope.dish.Ingredients;
      $scope.dishPrice = Dinner.getTotalDishPrice($scope.Ingredients);
-
+     
      Dinner.addPending(dishTitle,$scope.Ingredients);
 
    },function(data){
@@ -34,7 +34,7 @@ dinnerPlannerApp.controller('DishCtrl', function ($scope,$routeParams,Dinner) {
     }
 
     $scope.clearPending = function(){
-     // console.log("clearPending");
+      //console.log("back");
       Dinner.clearPending();
     }
 });
