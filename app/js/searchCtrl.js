@@ -6,7 +6,6 @@ dinnerPlannerApp.controller('SearchCtrl', function ($scope,Dinner) {
   // including the case while the search is still running.
   Dinner.DishSearch.get(function(data){
      $scope.dishes=data.Results;
-     //console.log($scope.dishes);
      $scope.status = "Showing " + data.Results.length + " results";
    },function(data){
      $scope.status = "There was an error";
@@ -16,7 +15,6 @@ dinnerPlannerApp.controller('SearchCtrl', function ($scope,Dinner) {
     $scope.status = "Searching...";
    Dinner.DishSearch.get({title_kw:query},function(data){
      $scope.dishes=data.Results;
-     //console.log($scope.dishes);
      $scope.status = "Showing " + data.Results.length + " results";
    },function(data){
      $scope.status = "There was an error";

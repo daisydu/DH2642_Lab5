@@ -1,7 +1,13 @@
 // Dinner controller that we use whenever we have view that needs to 
 // display or modify the dinner menu
 dinnerPlannerApp.controller('DinnerCtrl', function ($scope,Dinner) {
-
+  
+  // Dinner.getCookieMenu();
+  $scope.getCookieMenu = function(){
+    //console.log("getCookieMenu");
+     Dinner.getCookieMenu();
+  }
+ 
   $scope.numberOfGuests = Dinner.getNumberOfGuests();
   // $scope.listAlldishes = Dinner.DishSearch;
 
