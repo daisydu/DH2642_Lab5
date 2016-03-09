@@ -17,11 +17,11 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
   this.dishes = [];  
   this.menu = [];
   this.pending.Title = "pending";
-
-  // var apiKey = "18f3cT02U9f6yRl3OKDpP8NA537kxYKu";
+  this.menuID = [];
+   var apiKey = "18f3cT02U9f6yRl3OKDpP8NA537kxYKu";
   // var apiKey = "XKEdN82lQn8x6Y5jm3K1ZX8L895WUoXN";
   // var apiKey = "3stL5NVP4s6ZkmK5gt4dci8a4zOQRpD4";
-   var apiKey = "8vtk7KykflO5IzB96kb0mpot0sU40096";
+  // var apiKey = "8vtk7KykflO5IzB96kb0mpot0sU40096";
   // var apiKey = "1hg3g4Dkwr6pSt22n00EfS01rz568IR6";
   // var apiKey = "r02x0R09O76JMCMc4nuM0PJXawUHpBUL";
   // var apiKey = "H9n1zb6es492fj87OxDtZM9s5sb29rW3";
@@ -81,21 +81,39 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
     return dishPrice;
   }
 
+  this.getCookieMenu = function() {
+    if ( $cookieStore.get("menuID") ){
+      // this.menuID = $cookieStore.get("menuID");
+      console.log(this.menuID);
+      for (var key in this.menuID){
+      (function(key){
+        // this.menu[key]
+        //console.log("hi");
+      })(key)
+    }
+    };
+    else{
+      return;
+    }
+  }
+
   this.getFullMenu = function() {
-    for (var i = 0; i < this.menu.length; i++) {
+     for (var i = 0; i < this.menu.length; i++) {
         dishPrice = this.getTotalDishPrice(this.menu[i].Ingredients);
         this.menu[i].DishPrice = dishPrice;
     };
-        return this.menu;
+        return this.menu;        
   }
   
   this.addDishToMenu = function(dishID) {
+    this.getCookieMenu();
      this.Dish.get({id:dishID},function(data){
        var selectDishType = data.Category;
        var theSameType = -1;
 
         if (th.menu.length == 0) {
           th.menu.push(data);
+          th.menuID.push(dishID);
           //console.log("directly add");
         } else{
           for (var i = 0; i< th.menu.length; i++) {
@@ -110,14 +128,21 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
 
           if (theSameType != -1) {
             th.menu[theSameType] = data;
+            th.menuID[theSameType] = dishID;
             //console.log("switch");
           }else{
             th.menu.push(data); 
+            th.menuID.push(dishID);
             //console.log("addNew");
           };
         }; 
-        th.getFullMenu();  
+
+        //th.menuID.push(dishID);
+        $cookieStore.put("menuID",th.menuID);
+        // console.log(th.menuID);
+        // console.log($cookieStore.get("menuID"));  
      }); 
+     // this.getFullMenu();
   }
 
   this.removeDishFromMenu = function(id) {
@@ -131,7 +156,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
   }
 
   this.getTotalMenuPrice = function() {
-       this.getFullMenu();
+      this.getFullMenu();
        var totalPrice = 0;
        //console.log(this.menu);
         //The loop to get all the price and pass the value of the price
