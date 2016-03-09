@@ -120,6 +120,15 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
      }); 
   }
 
+
+  //var apiKey = "18f3cT02U9f6yRl3OKDpP8NA537kxYKu";
+  // var apiKey = "XKEdN82lQn8x6Y5jm3K1ZX8L895WUoXN";
+  // var apiKey = "3stL5NVP4s6ZkmK5gt4dci8a4zOQRpD4";
+  // var apiKey = "8vtk7KykflO5IzB96kb0mpot0sU40096";
+  //var apiKey = "1hg3g4Dkwr6pSt22n00EfS01rz568IR6";
+  // var apiKey = "r02x0R09O76JMCMc4nuM0PJXawUHpBUL";
+  var apiKey = "H9n1zb6es492fj87OxDtZM9s5sb29rW3";
+
   this.removeDishFromMenu = function(id) {
     for (var i = 0; i< this.menu.length; i++) {
       if (this.menu[i].RecipeID == id) {
@@ -142,6 +151,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookieStore) {
        //console.log(totalPrice);
       return totalPrice;
   }
+
 
   this.DishSearch = $resource('http://api.bigoven.com/recipes',{pg:1,rpp:5,api_key: apiKey});
   this.Dish = $resource('http://api.bigoven.com/recipe/:id',{api_key: apiKey}); 
