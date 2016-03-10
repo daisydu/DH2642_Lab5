@@ -14,8 +14,8 @@ not support it in free version) and list all the dishes that match the search. -
 			<div div class="col-xs-9">
 				<h2>My Dinner: <span class="numberOfPeople"></span> people</h2>
 			</div>
-			<div div class="col-xs-3" style="padding-top:25px;">
-				<button type="button" id="backToMenu1" class="btn btn-warning"><span class="glyphicon glyphicon-chevron-left"></span>Go Back and Edit Dinner</button>
+			<div div class="col-xs-3" style="padding-top:25px;"><a href="#/search">
+				<button type="button" id="backToMenu1" class="btn btn-warning"><span class="glyphicon glyphicon-chevron-left"></span>Go Back and Edit Dinner</button></a>
 			</div>
 		</div>
 
@@ -31,14 +31,14 @@ not support it in free version) and list all the dishes that match the search. -
 			</div>
 
 			<div class="col-xs-2" style="border">
-				    <div class="total price" ><p>Total Price:  <span id="totalPrice"></span>SEK</p></div>
+				    <div class="total price" ><p>Total Price: {{getTotalMenuPrice()}} <span id="totalPrice"></span>SEK</p></div>
 			</div>
 
 
 
 			<div class="row col-xs-12">
-				<div class="col-xs-2 col-xs-offset-5">
-					<button type="button" id="printFullRcp" style="margin: 10px 10px 5px 25px;" class="btn btn-warning"><a href="#/preparation">Print Full Recipe</button>
+				<div class="col-xs-2 col-xs-offset-5"><a href="#/preparation">
+					<button type="button" id="printFullRcp" style="margin: 10px 10px 5px 25px;" class="btn btn-warning">Print Full Recipe</button></a>
 				</div>
 			</div>
 	    </div>
